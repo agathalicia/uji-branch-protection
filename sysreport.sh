@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # sysreport.sh - Laporan kesehatan sistem ringkas untuk kebutuhan operasional
 set -euo pipefail
-
 SCRIPT_NAME="$(basename "$0")"
 readonly SCRIPT_NAME
 readonly VERSION="1.0.0"
@@ -15,9 +14,9 @@ usage() {
   cat <<USAGE
 $SCRIPT_NAME v$VERSION - laporan kesehatan sistem
 Penggunaan: $SCRIPT_NAME [OPSI]
-  -d N   Ambang peringatan pemakaian disk dalam persen (default: 80)
-  -j     Keluarkan hasil dalam format JSON
-  -h     Tampilkan bantuan ini
+  -d N    Ambang peringatan pemakaian disk dalam persen (default: 80)
+  -j      Keluarkan hasil dalam format JSON
+  -h      Tampilkan bantuan ini
 Exit code: 0 = sehat, 2 = melewati ambang, 1 = galat penggunaan
 USAGE
 }
