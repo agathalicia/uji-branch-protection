@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout kode
+        uses: actions/checkout@v7
+      - name: Pasang shellcheck jika belum tersedia
+        run: command -v shellcheck >/dev/null 2>&1 || (sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck)
+      - name: Siapkan Python 3.11
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+      - name: Jalankan lint dan unit test
+        run: ./ci.sh lint test
+
+  build-smoke:
+    needs: lint-test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout kode
+        uses: actions/checkout@v7
+      - name: Jalankan build image dan smoke test
+        run: ./ci.sh build smoke
